@@ -1,0 +1,26 @@
+<.header>
+  Scan request {@scan_request.id}
+  <:subtitle>This is a scan_request record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/scan_requests/#{@scan_request}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit scan_request</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Content">{@scan_request.content}</:item>
+</.list>
+
+<.back navigate={~p"/scan_requests"}>Back to scan_requests</.back>
+
+<.modal :if={@live_action == :edit} id="scan_request-modal" show on_cancel={JS.patch(~p"/scan_requests/#{@scan_request}")}>
+  <.live_component
+    module={ScamSnareWeb.ScanRequestLive.FormComponent}
+    id={@scan_request.id}
+    title={@page_title}
+    action={@live_action}
+    scan_request={@scan_request}
+    patch={~p"/scan_requests/#{@scan_request}"}
+  />
+</.modal>
