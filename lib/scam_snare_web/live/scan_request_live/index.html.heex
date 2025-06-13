@@ -1,9 +1,41 @@
 <.header>
-  <.form for={@form} phx-submit="scam_check" class="form">
-    <.input type="text" field={@form[:content]} />
-    <.button type="submit">Submit</.button>
-  </.form>
 </.header>
+
+<header class="p-6 flex flex-col items-center">
+       <img src={~p"/images/logo.png"} alt="Scam-Snare Logo" class="h-64 mb-4" />
+       <h1 class="text-4xl font-bold text-brand-green">Catch the Scam. Fix the Risk.</h1>
+       <p class="mt-2 text-center max-w-2xl">
+         Scam-Snare helps detect brittle, exploitable infrastructure before attackers do. Identify exposed login panels,
+         outdated software, and weak authentication paths with ease.
+       </p>
+     </header>
+
+     <main class="p-8 grid gap-8 max-w-4xl mx-auto">
+       <section class="bg-brand-purpleSoft p-6 rounded-2xl shadow-md border border-brand-black">
+         <h2 class="text-2xl font-semibold text-brand-green">🔍 Is this a scam?</h2>
+         <p class="mt-2">Start a scan and get insights into the signals detected by Scam-Snare.</p>
+         <.form for={@form} phx-submit="scam_check" class="form">
+           <.input type="text" field={@form[:content]} />
+           <.button type="submit" class="mt-4 bg-brand-green text-brand-black px-4 py-2 rounded-lg hover:bg-brand-greenHover">
+             Start Scan
+           </.button>
+         </.form>
+
+       </section>
+
+       <section class="bg-brand-purpleSoft p-6 rounded-2xl shadow-md border border-brand-black">
+         <h2 class="text-2xl font-semibold text-brand-green">🛠️ Coming Soon</h2>
+         <ul class="list-disc pl-6 mt-2 space-y-1">
+           <li>Rust-powered fingerprinting engine</li>
+           <li>Brute-force detection and fix suggestions</li>
+           <li>Auto-generated remediation playbooks</li>
+         </ul>
+       </section>
+     </main>
+
+     <footer class="p-4 text-sm text-center text-brand-text mt-12">
+       &copy; {Date.utc_today().year} Scam-Snare — Built to protect.
+     </footer>
 
 {@debug}
 

@@ -19,6 +19,7 @@ defmodule ScamSnareWeb.Router do
 
     get "/", PageController, :home
     live "/scan-requests", ScanRequestLive.Index, :index
+    live "/signals", SignalLive.Index, :index
   end
 
   # Other scopes may use custom stacks.

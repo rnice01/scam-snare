@@ -1,0 +1,26 @@
+<.header>
+  Signal {@signal.id}
+  <:subtitle>This is a signal record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/signals/#{@signal}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit signal</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name">{@signal.name}</:item>
+</.list>
+
+<.back navigate={~p"/signals"}>Back to signals</.back>
+
+<.modal :if={@live_action == :edit} id="signal-modal" show on_cancel={JS.patch(~p"/signals/#{@signal}")}>
+  <.live_component
+    module={ScamSnareWeb.SignalLive.FormComponent}
+    id={@signal.id}
+    title={@page_title}
+    action={@live_action}
+    signal={@signal}
+    patch={~p"/signals/#{@signal}"}
+  />
+</.modal>
