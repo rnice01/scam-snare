@@ -1,11 +1,11 @@
 <.header>
-  Listing Scan requests
-  <:actions>
-    <.link patch={~p"/scan_requests/new"}>
-      <.button>New Scan request</.button>
-    </.link>
-  </:actions>
+  <.form for={@form} phx-submit="scam_check" class="form">
+    <.input type="text" field={@form[:content]} />
+    <.button type="submit">Submit</.button>
+  </.form>
 </.header>
+
+{@debug}
 
 <.table
   id="scan_requests"
@@ -30,12 +30,5 @@
 </.table>
 
 <.modal :if={@live_action in [:new, :edit]} id="scan_request-modal" show on_cancel={JS.patch(~p"/scan_requests")}>
-  <.live_component
-    module={ScamSnareWeb.ScanRequestLive.FormComponent}
-    id={@scan_request.id || :new}
-    title={@page_title}
-    action={@live_action}
-    scan_request={@scan_request}
-    patch={~p"/scan_requests"}
-  />
+
 </.modal>

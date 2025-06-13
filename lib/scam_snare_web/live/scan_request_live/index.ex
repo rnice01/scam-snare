@@ -1,29 +1,40 @@
 defmodule ScamSnareWeb.ScanRequestLive.Index do
   use ScamSnareWeb, :live_view
 
+  alias Phoenix.PubSub
   alias ScamSnare.Scans
-  alias ScamSnare.Scans.ScanRequest
+  alias ScamSnare.Scans.ScamCheck
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, stream(socket, :scan_requests, [])}
+    PubSub.subscribe(ScamSnare.PubSub, "scam_request")
+
+    {:ok,
+     socket
+     |> assign(:form, to_form(Map.from_struct(%ScamCheck{})))
+     |> assign(:debug, "tthis is debug info")
+     |> stream(:scan_requests, [])}
+  end
+
+  @impl true
+  def handle_event("scam_check", params, socket) do
+    Phoenix.PubSub.broadcast(
+      ScamSnare.PubSub,
+      "scam_request",
+      {:update, Map.get(params, "content", "empty content")}
+    )
+
+    {:noreply, socket}
   end
 
   @impl true
   def handle_params(params, _url, socket) do
-    {:noreply, apply_action(socket, socket.assigns.live_action, params)}
+    {:noreply, socket}
   end
 
-  defp apply_action(socket, :new, _params) do
-    socket
-    |> assign(:page_title, "New Scan request")
-    |> assign(:scan_request, %ScanRequest{})
-  end
-
-  defp apply_action(socket, :index, _params) do
-    socket
-    |> assign(:page_title, "Listing Scan requests")
-    |> assign(:scan_request, nil)
+  @impl true
+  def handle_info({:update, state}, socket) do
+    {:noreply, socket |> assign(:debug, state)}
   end
 
   @impl true

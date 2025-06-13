@@ -29,19 +29,8 @@ defmodule ScamSnareWeb.ScanRequestLive.FormComponent do
   end
 
   @impl true
-  def update(%{scan_request: scan_request} = assigns, socket) do
-    {:ok,
-     socket
-     |> assign(assigns)
-     |> assign_new(:form, fn ->
-       to_form(Scans.change_scan_request(scan_request))
-     end)}
-  end
-
-  @impl true
   def handle_event("validate", %{"scan_request" => scan_request_params}, socket) do
-    changeset = Scans.change_scan_request(socket.assigns.scan_request, scan_request_params)
-    {:noreply, assign(socket, form: to_form(changeset, action: :validate))}
+    {:noreply, assign(socket, form: to_form(scan_request_params, action: :validate))}
   end
 
   def handle_event("save", %{"scan_request" => scan_request_params}, socket) do
